@@ -1,0 +1,492 @@
+:root {
+	--bg: #FAF9F6;
+	--ink: #20242C;
+	--sub: #6B7078;
+	--line: #E4E1D9;
+	--card: #FFFFFF;
+	--exam: #B8443C;
+	--exam-bg: #FBEAE8;
+	--assign: #3B6E52;
+	--assign-bg: #E9F2EC;
+	--notice: #C1852A;
+	--notice-bg: #FBF0DE;
+	box-sizing: border-box;
+	padding-top: env(safe-area-inset-top, 0px);
+	padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme="light"]) {
+		--bg: #1B1D22;
+		--ink: #EDEDEE;
+		--sub: #9A9DA6;
+		--line: #2E3138;
+		--card: #24262C;
+		--exam-bg: #3A2320;
+		--assign-bg: #20302A;
+		--notice-bg: #3A2E18;
+	}
+}
+
+:root[data-theme="dark"] {
+	--bg: #1B1D22;
+	--ink: #EDEDEE;
+	--sub: #9A9DA6;
+	--line: #2E3138;
+	--card: #24262C;
+	--exam-bg: #3A2320;
+	--assign-bg: #20302A;
+	--notice-bg: #3A2E18;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+html,
+body {
+	height: 100%;
+}
+
+body {
+	margin: 0;
+	background: var(--bg);
+	color: var(--ink);
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+}
+
+.wrap {
+	max-width: 640px;
+	margin: 0 auto;
+	padding: 28px 20px 80px;
+}
+
+header {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	margin-bottom: 20px;
+}
+
+h1 {
+	margin: 0;
+	font-size: 26px;
+	font-weight: 700;
+	letter-spacing: -0.02em;
+}
+
+.calendar-header {
+  margin-bottom: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+}
+
+.weekdays, .days-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+}
+
+.weekdays div {
+  color: var(--sub);
+  padding-bottom: 8px;
+}
+
+.days-grid div {
+  padding: 10px 0;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+/* Style for today's date if you want to highlight it */
+.days-grid .today {
+  background: #007bff;
+  color: white;
+  font-weight: bold;
+}
+
+.days-grid .assignment.today {
+  color: black;
+  font-weight: bold;
+  background: linear-gradient(rgba(26,255,0,0.5), rgba(26,255,0,0.5)), #007bff;
+}
+
+.days-grid .assignment {
+  background: #1aff00;
+  color: black;
+  font-weight: bold;
+}
+
+.today {
+	color: var(--sub);
+	font-size: 13px;
+}
+
+.somebuttons {
+	flex: none;
+	padding: 7px 14px;
+	border: 1px solid var(--line);
+	border-radius: 20px;
+	background: transparent;
+	color: var(--sub);
+	font-size: 13.5px;
+	cursor: pointer;
+}
+
+.datebutton {
+	flex: none;
+	padding: 7px 14px;
+	border: 1px solid var(--line);
+	border-radius: 20px;
+	background: transparent;
+	color: var(--sub);
+	font-size: 13.5px;
+	cursor: pointer;
+}
+
+.tabs {
+	display: flex;
+	gap: 6px;
+	margin-bottom: 18px;
+	overflow-x: auto;
+	padding-bottom: 2px;
+}
+
+.tab2 {
+	flex: none;
+	padding: 7px 14px;
+	border: 1px solid var(--line);
+	border-radius: 20px;
+	background: transparent;
+	color: var(--sub);
+	font-size: 13.5px;
+	cursor: pointer;
+}
+
+.tab2.active {
+	border-color: var(--ink);
+	background: var(--ink);
+	color: var(--bg);
+}
+
+.tab {
+	flex: none;
+	padding: 7px 14px;
+	border: 1px solid var(--line);
+	border-radius: 20px;
+	background: transparent;
+	color: var(--sub);
+	font-size: 13.5px;
+	cursor: pointer;
+}
+
+.tab.active {
+	border-color: var(--ink);
+	background: var(--ink);
+	color: var(--bg);
+}
+
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.board {
+	display: none;
+	margin-bottom: 20px;
+	padding: 14px 16px;
+	border: 1px solid var(--line);
+	border-radius: 14px;
+	background: var(--notice-bg);
+}
+
+.board.show {
+	display: block;
+}
+
+.board h2 {
+	margin: 0 0 10px;
+	color: var(--notice);
+	font-size: 13px;
+	font-weight: 700;
+}
+
+.note {
+	padding: 8px 0;
+	border-top: 1px solid var(--line);
+	font-size: 14px;
+	line-height: 1.45;
+}
+
+.note:first-of-type {
+	border-top: none;
+}
+
+.note button {
+	float: right;
+}
+
+ul.list {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.card {
+	display: flex;
+	align-items: flex-start;
+	gap: 12px;
+	padding: 14px 16px;
+	border: 1px solid var(--line);
+	border-radius: 14px;
+	background: var(--card);
+}
+
+.tag {
+	flex: none;
+	margin-top: 2px;
+	padding: 3px 8px;
+	border-radius: 8px;
+	font-size: 11px;
+	font-weight: 700;
+	white-space: nowrap;
+}
+
+.tag.exam {
+	background: var(--exam-bg);
+	color: var(--exam);
+}
+
+.tag.assignment {
+	background: var(--assign-bg);
+	color: var(--assign);
+}
+
+.body {
+	flex: 1;
+	min-width: 0;
+}
+
+.title {
+	margin: 0 0 3px;
+	font-size: 15px;
+	font-weight: 600;
+	word-wrap: break-word;
+}
+
+.meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	color: var(--sub);
+	font-size: 12.5px;
+}
+
+.notes-text {
+	margin-top: 4px;
+	color: var(--sub);
+	font-size: 13px;
+}
+
+.due {
+	font-weight: 600;
+}
+
+.due.soon {
+	color: var(--exam);
+}
+
+.del {
+	padding: 2px 4px;
+	border: none;
+	background: none;
+	color: var(--sub);
+	font-size: 18px;
+	line-height: 1;
+	cursor: pointer;
+}
+
+.empty {
+	padding: 40px 10px;
+	color: var(--sub);
+	font-size: 14px;
+	text-align: center;
+}
+
+.fab {
+	position: fixed;
+	right: 20px;
+	bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+	width: 54px;
+	height: 54px;
+	border: none;
+	border-radius: 50%;
+	background: var(--ink);
+	color: var(--bg);
+	font-size: 28px;
+	cursor: pointer;
+	box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+}
+
+.overlay {
+	position: fixed;
+	inset: 0;
+	display: none;
+	align-items: flex-end;
+	justify-content: center;
+	z-index: 10;
+	background: rgba(0, 0, 0, 0.35);
+}
+
+.overlay.show {
+	display: flex;
+}
+
+.sheet {
+	width: 100%;
+	max-width: 640px;
+	max-height: 85vh;
+	overflow-y: auto;
+	padding: 20px 20px calc(20px + env(safe-area-inset-bottom, 0px));
+	border-radius: 18px 18px 0 0;
+	background: var(--bg);
+}
+
+.sheet h2 {
+	margin: 0 0 14px;
+	font-size: 18px;
+}
+
+label {
+	display: block;
+	margin: 12px 0 5px;
+	color: var(--sub);
+	font-size: 12.5px;
+}
+
+input[type="text"],
+input[type="date"],
+textarea,
+select {
+	width: 100%;
+	padding: 10px 12px;
+	border: 1px solid var(--line);
+	border-radius: 10px;
+	background: var(--card);
+	color: var(--ink);
+	font: inherit;
+	font-size: 14.5px;
+}
+
+textarea {
+	min-height: 56px;
+	resize: vertical;
+}
+
+.typeRow {
+	display: flex;
+	gap: 8px;
+	margin-top: 4px;
+}
+
+.typeBtn {
+	flex: 1;
+	padding: 9px;
+	border: 1px solid var(--line);
+	border-radius: 10px;
+	background: var(--card);
+	color: var(--sub);
+	font-size: 13px;
+	cursor: pointer;
+}
+
+.typeBtn.on {
+	border-color: var(--ink);
+	color: var(--ink);
+	font-weight: 600;
+}
+
+.actions {
+	display: flex;
+	gap: 10px;
+	margin-top: 18px;
+}
+
+.btn {
+	flex: 1;
+	padding: 12px;
+	border: none;
+	border-radius: 10px;
+	font-size: 14.5px;
+	font-weight: 600;
+	cursor: pointer;
+}
+
+.btn.primary {
+	background: var(--ink);
+	color: var(--bg);
+}
+
+.btn.ghost {
+	border: 1px solid var(--line);
+	background: transparent;
+	color: var(--sub);
+}
+
+.hidden {
+	display: none !important;
+}
+
+/* The main popup box container */
+.popup-content {
+    background-color: #1B1D22;
+    padding: 20px;
+    border-radius: 12px;
+    width: 320px;
+    max-height: 80vh; /* Prevents the popup from being taller than the screen */
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Header layout: puts Date on left, X on right */
+.popup-header {
+    display: flex;
+    justify-content: space-between; /* Pushes items to opposite edges */
+    align-items: center;            /* Centers them vertically */
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 1px;
+}
+
+/* Style for the X button */
+#close-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #a0aec0;
+}
+
+#close-btn:hover {
+    color: #2d3748;
+}
+
+/* The magic scrollable box for your contents */
+.popup-body {
+    overflow-y: auto;   /* Automatically shows a scrollbar if content is too long */
+    max-height: 250px;  /* Set your preferred fixed height box limit */
+    padding-right: 4px; /* Gives a tiny bit of breathing room for the scrollbar */
+}
